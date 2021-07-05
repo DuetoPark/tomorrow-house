@@ -1,6 +1,7 @@
 .sidebar {
   $sidebar-width: 240px;
 
+  @include no-scrollbar;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,10 +17,6 @@
 
   &.is-active {
     transform: translate3d(0, 0, 0);
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
   }
 
   &-header {
