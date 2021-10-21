@@ -3,11 +3,9 @@
   $table-th-width-sm: 100px;
   $table-th-width-md: 140px + $table-cell-padding;
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
 
   tr {
     @include text-style(12, $primary);
