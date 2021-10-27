@@ -40,8 +40,12 @@
   }
 
   @include responsive(T) {
-    &::after {
-      height: 72px;
+    height: 148px;
+    padding: 0 72px;
+
+    .score-summary,
+    .score-details {
+      width: auto;
     }
 
     .score-summary {
@@ -52,13 +56,14 @@
       }
 
       .star-rating {
-        @include star-rating(24px);
         margin-right: 16px;
+        font-size: 24px;
       }
     }
 
-    .score-details {
-      @include flexbox;
+    &::after {
+      height: 72px;
+      margin: 0 69px;
     }
   }
 }
