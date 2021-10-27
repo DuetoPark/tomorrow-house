@@ -26,7 +26,7 @@
     }
 
     dd {
-      @include inline-flexbox;
+      @include flexbox;
 
       .bar-graph {
         width: 70px;
