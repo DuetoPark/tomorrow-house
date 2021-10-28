@@ -98,6 +98,16 @@
         height: 112px;
         margin-bottom: 16px;
       }
+
+      .username > strong {
+        @include text-style(14);
+        // NOTE: 가독성을 높이기 위해 시안보다 1px 더 크게 지정
+      }
+
+      p {
+        @include text-style(14);
+        // NOTE: 가독성을 높이기 위해 시안보다 1px 더 크게 지정
+      }
     }
   }
 
