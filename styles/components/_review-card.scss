@@ -84,4 +84,31 @@
       }
     }
   }
+
+  @include responsive(T) {
+    padding: 40px 0 40px 32px;
+
+    &-header {
+      margin-left: -32px;
+    }
+
+    &-body {
+      .review-image {
+        width: 112px;
+        height: 112px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  @include responsive(D) {
+    &-header {
+      .avatar-24,
+      .username {
+        &:hover {
+          opacity: 0.4;
+        }
+      }
+    }
+  }
 }
