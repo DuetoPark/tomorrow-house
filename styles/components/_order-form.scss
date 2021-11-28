@@ -38,7 +38,12 @@
     @include flexbox(between);
 
     button {
-      width: calc((100% - 8px) / 2);
+      width: 50%;
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }
