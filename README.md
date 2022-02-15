@@ -1,4 +1,9 @@
-# 내일의 집
+# 🛋 내일의 집
+> CSS를 잘하고 싶어서 결제한 강의 (ʃƪ ˘ ³˘)  
+> 
+### [개발배경](https://github.com/DuetoPark/tomorrow-house/wiki/%EA%B0%9C%EB%B0%9C-%EB%B0%B0%EA%B2%BD)
+### [Wiki](https://github.com/DuetoPark/tomorrow-house/wiki)
+
 
 ### 1. GNB
 
