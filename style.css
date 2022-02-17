@@ -2469,7 +2469,8 @@ i {
 
 .lnb {
   overflow-x: auto;
-  background-color: #fff; }
+  background-color: #fff;
+  border-bottom: 1px solid #e0e2e7; }
   .lnb::-webkit-scrollbar {
     display: none !important; }
   .lnb-list {
@@ -2479,8 +2480,7 @@ i {
     height: 40px;
     padding: 0 7px;
     margin-left: -15px;
-    white-space: nowrap;
-    border-bottom: 1px solid #e0e2e7; }
+    white-space: nowrap; }
   .lnb-item.is-active a {
     color: #3da5f5;
     border-bottom-color: #3da5f5; }
@@ -2636,7 +2636,8 @@ i {
       line-height: 16px;
       letter-spacing: -0.005em;
       color: #8c8d96;
-      margin-left: 4px; }
+      margin-left: 4px;
+      pointer-events: none; }
   @media screen and (min-width: 768px) {
     .product-tab {
       top: 129px;
