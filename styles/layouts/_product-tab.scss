@@ -39,6 +39,7 @@
     .badge {
       @include text-style(12, $secondary);
       margin-left: 4px;
+      pointer-events: none;
     }
   }
 
