@@ -25,20 +25,44 @@ function scrollToTabPanel(event) {
   const id = tabItem.getAttribute('aria-labelledby');
   const tabPanel = document.querySelector(`#${id}`);
 
-  const tabPanelTop = tabPanel.offsetTop;
+  const tabPanelTop = tabPanel.getBoundingClientRect().top;
   const scrollAmount =
     tabPanelTop -
     (window.innerWidth >= BREAKPOINT_DESKTOP
       ? TOP_HEADER_DESKTOP
       : TOP_HEADER_MOBILE);
 
-  window.scrollTo({
+  window.scrollBy({
     top: scrollAmount,
     behavior: 'smooth',
   });
-  // scrollBy를 쓰려면,
-  // tapPanel의 top => tabPanel.getBoundingClientRect().top으로 수정한다.
 }
 
 productTabList.addEventListener('click', activeTabItem);
 productTabList.addEventListener('click', scrollToTabPanel);
+
+const tabPanelIdList = [
+  'product-spec',
+  'product-inquiry',
+  'product-review',
+  'product-shipment',
+  'product-recommendation',
+];
+
+let tabPanelPosition = {};
+
+const tabPanelList = tabPanelIdList.map((tabPanelId) => {
+  return document.querySelector(`#${tabPanelId}`);
+});
+
+function detectTabPanelPosition() {
+  tabPanelList.forEach((tabPanel) => {
+    const id = tabPanel.id;
+    const position = window.scrollY + tabPanel.getBoundingClientRect().top;
+
+    tabPanelPosition[id] = position;
+  });
+}
+
+window.addEventListener('load', detectTabPanelPosition);
+window.addEventListener('resize', detectTabPanelPosition);
