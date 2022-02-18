@@ -5,7 +5,9 @@ const TOP_HEADER__MOBILE = 50 + 40 + 40;
 const TOP_HEADER__DESKTOP = 80 + 50 + 54;
 const PADDING__MOBILE = 8;
 const PADDING__DESKTOP = 80;
-const BREAKPOINT_DESKTOP = 768;
+const BODY_MARGIN = 56;
+const BREAKPOINT_TABLET = 768;
+const BREAKPOINT_DESKTOP = 1200;
 
 function activeTabItem(event) {
   const target = event.target;
@@ -13,11 +15,17 @@ function activeTabItem(event) {
 
   if (tabItem.matches('.is-active')) return;
 
+  distableUpdating = true;
+
   productTabItemList.forEach((item) => {
     item.classList.remove('is-active');
   });
 
   tabItem.classList.toggle('is-active');
+
+  setTimeout(() => {
+    distableUpdating = false;
+  }, 1000);
 }
 
 function scrollToTabPanel(event) {
@@ -30,7 +38,7 @@ function scrollToTabPanel(event) {
   const tabPanelTop = tabPanel.getBoundingClientRect().top;
   const scrollAmount =
     tabPanelTop -
-    (window.innerWidth >= BREAKPOINT_DESKTOP
+    (window.innerWidth >= BREAKPOINT_TABLET
       ? TOP_HEADER__DESKTOP
       : TOP_HEADER__MOBILE);
 
@@ -43,6 +51,10 @@ function scrollToTabPanel(event) {
 productTabList.addEventListener('click', activeTabItem);
 productTabList.addEventListener('click', scrollToTabPanel);
 
+let productTabPanelPosition = {};
+let activeTab = null;
+let distableUpdating = false;
+
 const tabPanelIdList = [
   'product-spec',
   'product-review',
@@ -50,8 +62,6 @@ const tabPanelIdList = [
   'product-shipment',
   'product-recommendation',
 ];
-
-let productTabPanelPosition = {};
 
 const tabPanelList = tabPanelIdList.map((tabPanelId) => {
   return document.querySelector(`#${tabPanelId}`);
@@ -64,17 +74,16 @@ function detectTabPanelPosition() {
 
     productTabPanelPosition[id] = position;
   });
+
+  updateActiveTabOnScroll();
 }
 
-window.addEventListener('load', detectTabPanelPosition);
-window.addEventListener('resize', detectTabPanelPosition);
+function updateActiveTabOnScroll() {
+  if (distableUpdating) return;
 
-let activeTab = null;
-
-function updateProductTabOnScroll() {
   const scrollAmount =
     window.scrollY +
-    (window.innerWidth > BREAKPOINT_DESKTOP
+    (window.innerWidth >= BREAKPOINT_TABLET
       ? TOP_HEADER__DESKTOP + PADDING__DESKTOP
       : TOP_HEADER__MOBILE) +
     PADDING__MOBILE;
@@ -92,6 +101,16 @@ function updateProductTabOnScroll() {
     newActiveTab = productTabItemList[0];
   }
 
+  const bodyHeight =
+    document.body.offsetHeight +
+    (window.innerWidth < BREAKPOINT_DESKTOP ? BODY_MARGIN : 0);
+  const scrollAmountToPageEnd = window.innerHeight + Math.ceil(window.scrollY);
+  // BUG: window.scrollY의 소수점 단위를 올림해야지, 해서 정확하게 일치하게 됨.
+
+  if (scrollAmountToPageEnd === bodyHeight) {
+    newActiveTab = productTabItemList[4];
+  }
+
   if (newActiveTab === activeTab) return;
 
   newActiveTab.classList.add('is-active');
@@ -99,7 +118,9 @@ function updateProductTabOnScroll() {
   activeTab = newActiveTab;
 }
 
-window.addEventListener('scroll', updateProductTabOnScroll);
+window.addEventListener('load', detectTabPanelPosition);
+window.addEventListener('resize', detectTabPanelPosition);
+window.addEventListener('scroll', updateActiveTabOnScroll);
 
-// updateProductTabOnScroll에 원래 tabPanelList를 forEach해서 scroll 동작 구현했었다.
+// updateActiveTabOnScroll에 원래 tabPanelList를 forEach해서 scroll 동작 구현했었다.
 // 왜 바꿨냐면, scroll 이벤트 자체가 콜백함수를 계속해서 반복하는데, 콜백함수 안에도 반복문이 있으면 성능이 저하되니까.
