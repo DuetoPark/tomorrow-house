@@ -105,7 +105,7 @@ function updateActiveTabOnScroll() {
     document.body.offsetHeight +
     (window.innerWidth < BREAKPOINT_DESKTOP ? BODY_MARGIN : 0);
   const scrollAmountToPageEnd = window.innerHeight + Math.ceil(window.scrollY);
-  // BUG: window.scrollY의 소수점 단위를 올림해야지, 해서 정확하게 일치하게 됨.
+  // BUG: window.scrollY의 소수점 단위를 올림해야지, 정확하게 값이 일치됨.
 
   if (scrollAmountToPageEnd === bodyHeight) {
     newActiveTab = productTabItemList[4];
@@ -119,8 +119,8 @@ function updateActiveTabOnScroll() {
 }
 
 window.addEventListener('load', detectTabPanelPosition);
-window.addEventListener('resize', detectTabPanelPosition);
-window.addEventListener('scroll', updateActiveTabOnScroll);
+window.addEventListener('resize', _.throttle(detectTabPanelPosition, 1000));
+window.addEventListener('scroll', _.throttle(updateActiveTabOnScroll, 300));
 
 // updateActiveTabOnScroll에 원래 tabPanelList를 forEach해서 scroll 동작 구현했었다.
 // 왜 바꿨냐면, scroll 이벤트 자체가 콜백함수를 계속해서 반복하는데, 콜백함수 안에도 반복문이 있으면 성능이 저하되니까.
